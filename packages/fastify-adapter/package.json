@@ -1,0 +1,9 @@
+{
+  "name": "@limo/fastify-adapter",
+  "version": "0.0.0",
+  "main": "src/index.tsx",
+  "dependencies": {
+    "fastify": "^4.9.2",
+    "@limo/lib": "*"
+  }
+}

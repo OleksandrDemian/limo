@@ -1,0 +1,10 @@
+{
+  "name": "@limo/cli",
+  "version": "0.0.0",
+  "bin": {
+    "limo": "bin/index.js"
+  },
+  "dependencies": {
+    "esbuild": "^0.15.12"
+  }
+}

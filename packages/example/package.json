@@ -1,0 +1,14 @@
+{
+  "name": "@limo/example",
+  "version": "0.0.0",
+  "scripts": {
+    "build:example": "limo && node ./build/bundle.js"
+  },
+  "dependencies": {
+    "@limo/lib": "*",
+    "@limo/fastify-adapter": "*"
+  },
+  "devDependencies": {
+    "@limo/cli": "*"
+  }
+}

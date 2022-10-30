@@ -1,0 +1,19 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "id": "asfawh879y",
+  "name": "Test user"
+}
+
+###
+
+GET http://localhost:3000/users?id=asfawh879y
+
+###
+
+GET http://localhost:3000/users?id=awfafssda
+
+###
+
+GET http://localhost:3000/users/all
