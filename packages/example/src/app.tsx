@@ -1,4 +1,4 @@
-import { Limo } from "@limo/lib";
+import {Get, Limo, Router} from "@limo/lib";
 import {UserRouter} from "./routers/UsersRouter";
 import {TestRouter} from "./routers/TestsRouter";
 import {FastifyServerOptions} from "fastify";
@@ -15,6 +15,11 @@ export const App = () => {
     <FastifyApp onStart={onStart} port={port} fastifyOptions={options}>
       <UserRouter />
       <TestRouter />
+      <Router path="/rand">
+        <Get>
+          {async () => ({ hello: true })}
+        </Get>
+      </Router>
     </FastifyApp>
   )
 };

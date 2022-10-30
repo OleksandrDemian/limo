@@ -17,3 +17,7 @@ GET http://localhost:3000/users?id=awfafssda
 ###
 
 GET http://localhost:3000/users/all
+
+###
+
+GET http://localhost:3000/rand

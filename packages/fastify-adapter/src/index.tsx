@@ -1,24 +1,21 @@
-import {Limo, Router, EndpointType} from "@limo/lib";
-import fastify, {FastifyServerOptions} from "fastify";
+import Limo, {EndpointType, JsxLimo, getEndpoints} from "@limo/lib";
+import fastify, {FastifyInstance, FastifyServerOptions} from "fastify";
 
 export type FastifyAppProps = {
-  children?: JSX.Element[];
   onStart?: () => void;
   port: number;
   fastifyOptions?: FastifyServerOptions;
+  beforeStart?: (instance: FastifyInstance) => void;
 };
-export const FastifyApp = ({ children, onStart, port, fastifyOptions }: FastifyAppProps) => {
-  const endpoints: EndpointType[] = [];
+export const FastifyApp: JsxLimo<void, FastifyAppProps> = ({
+  children,
+  onStart,
+  port,
+  fastifyOptions,
+  beforeStart,
+}) => {
+  const endpoints: EndpointType[] = getEndpoints(children);
   const server = fastify(fastifyOptions);
-
-  for (const child of children) {
-    const r = child.tagName();
-    if (r.tagName === Router) {
-      endpoints.push(
-        ...r.tagName({ ...r.props, children: r.children }),
-      );
-    }
-  }
   
   for (const endpoint of endpoints) {
     console.log(`Create endpoint ${endpoint.method}: ${endpoint.url}`);
@@ -28,12 +25,14 @@ export const FastifyApp = ({ children, onStart, port, fastifyOptions }: FastifyA
       handler: endpoint.handler,
     });
   }
-  
+
+  if (beforeStart) {
+    beforeStart(server);
+  }
+
   server.listen({ port }).then(() => {
     if (onStart) {
       onStart();
     }
   });
-
-  return server;
 };

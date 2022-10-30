@@ -1,4 +1,4 @@
-import { Limo, Router, Endpoint } from "@limo/lib";
+import Limo, {Router, Get, Post} from "@limo/lib";
 import {addUser, findUser, getUsers} from "../../data/users";
 
 const GetUser = async (req, res) => {
@@ -15,21 +15,16 @@ const GetUsers = async (req, res) => {
   return await getUsers();
 }
 
-// export const createUsersRoute = (fastify: FastifyInstance) => {
-//   fastify.get('/users', GetUser);
-//   fastify.post('/users', CreateUser);
-// }
-
 export const UserRouter = () => (
   <Router path="/users">
-    <Endpoint path="/" method="GET">
+    <Get>
       <GetUser />
-    </Endpoint>
-    <Endpoint path="/" method="POST">
+    </Get>
+    <Post>
       <CreateUser />
-    </Endpoint>
-    <Endpoint path="/all">
+    </Post>
+    <Get path="/all">
       <GetUsers />
-    </Endpoint>
+    </Get>
   </Router>
 );

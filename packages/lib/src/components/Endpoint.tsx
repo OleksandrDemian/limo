@@ -1,30 +1,17 @@
+import {Limo} from "../Limo";
 import {HTTPMethod, EndpointType} from "../types/endpoints";
-
-const getFn = (node: JSX.Element) => {
-  let fn = undefined;
-  if (typeof node === "function") {
-    fn = node;
-  }
-
-  if (typeof node !== "function" && typeof node.tagName === "function") {
-    fn = node.tagName;
-  }
-  
-  return fn;
-}
+import {JsxLimo, LimoNode} from "../types/jsx";
 
 export type EndpointProps = {
-  path: string;
+  path?: string;
   method?: HTTPMethod;
-  children?: ((req: any, res: any) => any)[];
 };
-export const Endpoint = ({ method = 'GET', path, children }: EndpointProps): EndpointType | undefined => {
-  let fn = null;
-  if (children.length === 1) {
-    fn = getFn(children[0]);
+
+const getEndpoint = ({ method, path }: EndpointProps, children: LimoNode[]): EndpointType | undefined => {
+  if (children.length < 1) {
+    console.warn(`No handler detected for endpoint ${method}: ${path}. Only the first one will be used`);
   } else if (children.length > 1) {
-    console.warn(`Multiple functions detected for endpoint ${method}: ${path}. Only the first one will be used`);
-    fn = getFn(children[0]);
+    console.warn(`Multiple handlers detected for endpoint ${method}: ${path}. Only the first one will be used`);
     // todo: does chain makes sense?
     // const chain = [];
     // for (const child of children) {
@@ -39,15 +26,30 @@ export const Endpoint = ({ method = 'GET', path, children }: EndpointProps): End
     //
     //   return ret;
     // }
-  }
-
-  if (fn == null) {
-    return undefined;
-  }
-
-  return {
-    method,
-    url: path,
-    handler: fn,
+  } else {
+    return ({
+      method: method,
+      url: path || '',
+      handler: typeof children[0] === "function" ? children[0] : children[0].fn,
+    });
   }
 }
+
+export const Endpoint: JsxLimo<EndpointType | undefined, EndpointProps> =
+  ({ method = 'GET', path, children }) =>
+    getEndpoint({ method, path }, children);
+
+export const Get: JsxLimo<EndpointType | undefined, EndpointProps> = ({ method = 'GET', path, children }) =>
+  getEndpoint({ method, path }, children);
+
+export const Post: JsxLimo<EndpointType | undefined, EndpointProps> = ({ method = 'POST', path, children }) =>
+  getEndpoint({ method, path }, children);
+
+export const Put: JsxLimo<EndpointType | undefined, EndpointProps> = ({ method = 'PUT', path, children }) =>
+  getEndpoint({ method, path }, children);
+
+export const Patch: JsxLimo<EndpointType | undefined, EndpointProps> = ({ method = 'PATCH', path, children }) =>
+  getEndpoint({ method, path }, children);
+
+export const Delete: JsxLimo<EndpointType | undefined, EndpointProps> = ({ method = 'DELETE', path, children }) =>
+  getEndpoint({ method, path }, children);
