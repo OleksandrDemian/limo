@@ -1,0 +1,14 @@
+{
+  "name": "@limo/example-express",
+  "version": "0.0.0",
+  "scripts": {
+    "build:example:express": "limo && node ./build/bundle.js"
+  },
+  "dependencies": {
+    "@limo/lib": "*",
+    "@limo/express-adapter": "*"
+  },
+  "devDependencies": {
+    "@limo/cli": "*"
+  }
+}
