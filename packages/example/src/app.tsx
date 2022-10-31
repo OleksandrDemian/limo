@@ -1,7 +1,7 @@
 import {Get, Limo, Router} from "@limo/lib";
 import {UserRouter} from "./routers/UsersRouter";
 import {TestRouter} from "./routers/TestsRouter";
-import {FastifyServerOptions} from "fastify";
+import {FastifyServerOptions, FastifyInstance} from "fastify";
 import { FastifyApp } from "@limo/fastify-adapter";
 
 export const App = () => {
@@ -9,10 +9,17 @@ export const App = () => {
   const options: FastifyServerOptions = {
     logger: false,
   };
+
   const onStart = () => console.log(`App started on port ${port}`);
+  const beforeStart = (instance: FastifyInstance) => {};
 
   return (
-    <FastifyApp onStart={onStart} port={port} fastifyOptions={options}>
+    <FastifyApp
+      port={port}
+      fastifyOptions={options}
+      onStart={onStart}
+      beforeStart={beforeStart}
+    >
       <UserRouter />
       <TestRouter />
       <Router path="/rand">

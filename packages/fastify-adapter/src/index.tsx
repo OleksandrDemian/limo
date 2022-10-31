@@ -18,7 +18,7 @@ export const FastifyApp: JsxLimo<void, FastifyAppProps> = ({
   const server = fastify(fastifyOptions);
   
   for (const endpoint of endpoints) {
-    console.log(`Create endpoint ${endpoint.method}: ${endpoint.url}`);
+    console.log(`Limo: create endpoint ${endpoint.method}: ${endpoint.url}`);
     server.route({
       method: endpoint.method,
       url: endpoint.url,

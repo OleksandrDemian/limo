@@ -1,0 +1,12 @@
+{
+  "name": "@limo/express-adapter",
+  "version": "0.0.0",
+  "main": "src/index.tsx",
+  "dependencies": {
+    "express": "^4.17.14",
+    "@limo/lib": "*"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14"
+  }
+}
