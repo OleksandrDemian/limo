@@ -29,7 +29,14 @@ export const Router: JsxLimo<EndpointType[], RouterProps> = ({ children, path })
     // @ts-ignore
     if (child.fn === Router) {
       // todo nested routers
-
+      const r: any = child;
+      endpoints.push(
+        ...r.fn({
+          ...r.props,
+          path: r.props.path ? path + r.props.path : '',
+          children: r.children,
+        }),
+      );
       // @ts-ignore
     } else if (ENDPOINT_FUNCTIONS.indexOf(child.fn) > -1) {
       endpoints.push(getEndpoint(
