@@ -1,6 +1,8 @@
 # Node server with JSX routing
 
-JSX is an XML-like syntax extension to javascript. It is mainly associated with front-end development since it is used in client-side libraries/frameworks such as React and Solid, but in reality its potential goes beyond template rendering. JSX is transpiled into pure JavaScript, and what you do with it is up to you. One of the things you can do with it is to generate endpoints for a backend server.
+JSX is an XML-like syntax extension to javascript. It is mainly associated with front-end development since it is used in client-side libraries/frameworks such as [React](https://reactjs.org/) and [Solid](https://www.solidjs.com/), but in reality its potential goes beyond template rendering. JSX is transpiled into pure JavaScript, and what you do with it is up to you.
+
+One of the things you can do with it is to generate endpoints for a backend server.
 
 ## Goal
 The goal is to have a NodeJs server that will route requests using JSX components like this:
@@ -64,13 +66,13 @@ export const App = () => {
 ```
 
 ## Tech
-* esbuild: Transpile JSX and bundle server code
-* fastify: Fast and low overhead web framework for Node.js
+* [esbuild](https://esbuild.github.io/): Transpile JSX and bundle server code
+* [fastify](https://www.fastify.io/): Fast and low overhead web framework for Node.js
 
 ## Overview
-To achieve the goal, the JSX code should be transpiled into plain Javascript, which can be executed by Node. You can use any transpiler you want, in this tutorial I will go with `esbuild`, since it is simple to use and set up. We will also have to provide a custom jsx processor, which in our case will be a simple function that returns the parameters, the logic will be implemented in the components themselves.
+To achieve the goal, the JSX code should be transpiled into plain Javascript, which can be executed by `node`. You can use any transpiler you want, in this tutorial I will go with `esbuild`, since it is simple to use and set up. We will also have to provide a custom jsx processor, which in our case will be a simple function that returns the parameters, the logic will be implemented in the components themselves.
 
-## Entities
+## Entities (base components)
 From the above code we can already identify the following entities:
 * FastifyApp: a component that will instantiate the Fastify server and assign routes
 * Router: a component that will process its children and return a list of endpoints to the FastifyApp
@@ -109,7 +111,7 @@ export default CustomJsxProcessor;
 ## Base components
 Note that base components (Endpoint, Router, and FastifyApp) won't return JSX as you do with client-side libraries, instead, they will return javascript objects that can be used by Fastify.
 
-Base components will be executed at start time (once) to create routes and cannot be modified at runtime.
+Base components **will be executed at start time (once)** to create routes and cannot be modified at runtime (as oposed to React where components are executed every time).
 
 ### Endpoint
 ```javascript
@@ -280,6 +282,7 @@ Now that we have all the base components we can start implementing the applicati
 ```javascript
 /* src/routes/Users.jsx */
 
+/* ! REMEMBER TO IMPORT JSX FACTORY (CustomJsxProcessor) */
 import CustomJsxProcessor from "../CustomJsxProcessor";
 import {Router} from "../components/Router";
 import {Endpoint} from "../components/Endpoint";
@@ -422,3 +425,5 @@ Just for reference, the package.json looks like this:
   }
 }
 ```
+
+You can find the code [here](https://github.com/OleksandrDemian/limo/tree/master/packages/article).
