@@ -1,0 +1,11 @@
+{
+  "name": "@limo/article",
+  "version": "0.0.0",
+  "scripts": {
+    "start:article": "node scripts/index.js && node ./build/server.js"
+  },
+  "dependencies": {
+    "fastify": "^4.9.2",
+    "esbuild": "^0.15.12"
+  }
+}
