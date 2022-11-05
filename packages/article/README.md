@@ -71,7 +71,7 @@ export const App = () => {
 To achieve the goal, the JSX code should be transpiled into plain Javascript, which can be executed by Node. You can use any transpiler you want, in this tutorial I will go with `esbuild`, since it is simple to use and set up. We will also have to provide a custom jsx processor, which in our case will be a simple function that returns the parameters, the logic will be implemented in the components themselves.
 
 ## Entities
-From the code above we can already identify the following entities:
+From the above code we can already identify the following entities:
 * FastifyApp: a component that will instantiate the Fastify server and assign routes
 * Router: a component that will process its children and return a list of endpoints to the FastifyApp
 * Endpoint: a component containing endpoint description (method, path) and will return a handler
@@ -82,7 +82,7 @@ For this project to run you will have to install the following dependencies (you
 * fastify (v`^4.9.2`)
 
 ## Custom processor and start function
-* CustomJsxProcessor: this function will be used to replace JSX elements. It is same as React.createElement and should be imported in all jsx files (no auto-import in this tutorial).
+* CustomJsxProcessor: this function will be used to replace JSX elements. It is the same as React.createElement and should be imported in all jsx files (no auto-import in this tutorial).
 * start: this function will start the app
 
 ```javascript
@@ -107,8 +107,7 @@ export default CustomJsxProcessor;
 ```
 
 ## Base components
-Note that base components (Endpoint, Router and FastifyApp) won't return JSX like you do with client side libraries,
-instead they will return javascript objects that can be used by Fastify.
+Note that base components (Endpoint, Router, and FastifyApp) won't return JSX as you do with client-side libraries, instead, they will return javascript objects that can be used by Fastify.
 
 Base components will be executed at start time (once) to create routes and cannot be modified at runtime.
 
@@ -275,7 +274,7 @@ export const FastifyApp = ({
 ```
 
 ## App
-Now that we have all the base component we can start implementing the application.
+Now that we have all the base components we can start implementing the application.
 
 ### Users router
 ```javascript
@@ -383,7 +382,7 @@ start(App);
 ```
 
 ## Run the server
-Now that all the components are in place, and App is implemented, the only remaining thing is to run it. We will need to bundle the app using `esbuild` and executed the bundle with node.
+Now that all the components are in place, and App is implemented, the only remaining thing is to run it. We will need to bundle the app using `esbuild` and execute the bundle with node.
 
 ### bundle script
 ```javascript
